@@ -21,15 +21,30 @@ get '/' do
   erb :index
 end
 
-get '/create' do
+post '/watch' do
+end
+
+get '/submit' do
   erb :create
 end
 
+get '/about' do
+  erb :about
+end
+
 post '/create' do
+  
+  
   link = Link.new(params[:link])
   if link.save
     redirect to "/"
   else
     return "failure!"
   end
+end
+
+
+def getID(url)
+  #https://www.youtube.com/watch?v=AAsICMPwGPY
+  return url.slice(/([A-Z])\w+/)
 end

@@ -1,9 +1,113 @@
 <head>
-  <title>YouTube link sharer</title>
+  <link type="text/css" rel="stylesheet" href="./css/bootstrap.css" />
+  <script src="./js/jquery-1.12.2.min.js"></script>
+  
+  <title>Youtube Video Thingy 2.0</title>
 </head>
 
 <body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mynavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Youtube Woo</a>
+            </div>
+            <div class="collapse navbar-collapse" id="mynavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/submit">Submit</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+                <ul class="nav navbar-form navbar-right">
+                    <a class="btn btn-primary" href="/sign up">Sign up</a>
+                    <button class="btn btn-default" data-toggle="modal" data-target="#signin">Sign in</button>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Modal -->
+    <div id="signin" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Sign In!</h4>
+                </div>
+                <div class="modal-body">
+                    <!--THIS IS IN THE PARAGRAPH THING -->
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="email">Email address:</label>
+                            <input type="email" class="form-control" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Password:</label>
+                            <input type="password" class="form-control" id="pwd">
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox"> Remember me</label>
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                    <!--THIS IS THE END OF THE PARAGRAPH THING -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container-fluid col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <%= yield %>
+    </div>
+    <script src="./js/bootstrap.js"></script>
+    
+    <script>
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
 
-<%= yield %>
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '390',
+          width: '640',
+          videoId: '',
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+         //setTimeout(stopVideo, 6000);
+         //done = true;
+        }
+      }
+      function stopVideo() {
+        player.stopVideo();
+      }
+    </script>
 </body>

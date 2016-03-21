@@ -1,10 +1,25 @@
-<ul>
-<% @links.each do |link| %>
- <li>
-   <p><a href="<%= link.link %>"><%= link.link %></a> from <%= link.author %></p>
-   <p><%= link.comment %></p> 
- </li>
-<% end %>
-</ul>
-
-<p><a href="/create">Add Link</a></p>
+<div class="row">
+  <div class="col-md-4" >
+    <%@links.each do |link| %>
+      <img src="<%= "http://img.youtube.com/vi/" + link.link.to_s.slice(/[A-Z|0-9]{10,12}/i) + "/3.jpg" %>" style="float: left; margin:2px;">
+      <p>Submitted by <%= link.author %></p>
+      <button class="btn btn-default" <%= "onclick=\"player.loadVideoById('" + link.link.to_s.slice(/[A-Z|0-9]{10,12}/i) + "', 0, 'large');player.play\"" %>>Watch</button>
+      <br clear="all">
+    <% end %>
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <div class="col-md-8">
+    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+    <div id="player"></div>
+    
+  </div>
+</div>
