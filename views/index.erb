@@ -1,10 +1,18 @@
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover(); 
+});
+</script>
 <div class="row">
   <div class="col-md-4" >
-    <%@links.each do |link| %>
-      <img src="<%= "http://img.youtube.com/vi/" + link.link.to_s.slice(/[A-Z|0-9]{10,12}/i) + "/3.jpg" %>" style="float: left; margin:2px;">
-      <p>Submitted by <%= link.author %></p>
-      <button class="btn btn-default" <%= "onclick=\"player.loadVideoById('" + link.link.to_s.slice(/[A-Z|0-9]{10,12}/i) + "', 0, 'large');player.play\"" %>>Watch</button>
+    <%@videos.each do |link| %>
+    <div style="border: 1px solid black;">
+      <a href="<%= link.link %>"><img src="<%= "http://img.youtube.com/vi/" + link.link.to_s.slice(/[A-Z|0-9]{10,12}/i) + "/3.jpg" %>" style="float: left; margin:2px;"></a>
+      <!--button class="btn btn-default" <%= "onclick=\"player.loadVideoById('" + link.link.to_s.slice(/[A-Z|0-9]{10,12}/i) + "', 0, 'large');\"" %>>Watch</button-->
+      <form action="/video&watch_v=<%= link.id %>" method="GET"> 
+      <button class="btn btn-default">View Comments</button></form>
       <br clear="all">
+    </div>
     <% end %>
   </div>
   
@@ -17,9 +25,20 @@
   
   
   
-  <div class="col-md-8">
-    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+  <!--div class="col-md-8">
+    <-- 1. The <iframe> (and video player) will replace this <div> tag. >
+    <div>
+      <h1 id="videoTitle">Choose a video</h1>
+    </div>
     <div id="player"></div>
+    <br clear="all">
+    <form role="form" id="myform" action="#">
+      <div class="form-group">
+        <label for="comment">Comment:</label>
+        <input type="text" class="form-control col-md-3" id="comment" name="comment[comment]">
+      </div>
+      <button type="" class="btn btn-default">Submit</button>
+    </form>
     
-  </div>
+  </div-->
 </div>
