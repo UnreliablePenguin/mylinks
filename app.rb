@@ -2,6 +2,8 @@ require 'sinatra'
 require 'uri'
 require 'active_record'
 
+enable :sessions
+
 set :public_folder, 'public'
 
 db = URI.parse(ENV['DATABASE_URL'] || 'postgres:///myvideos')
@@ -51,7 +53,11 @@ end
 post '/video&watch_v=:vid' do 
   comment = params[:comment]
   comment['video_id'] = params['vid']
-  comment['author'] = "Anonymous"
+  if (session['login'] != true)
+    comment['author'] = "Anonymous"
+  else
+    comment['author'] = session['author']
+  end
   newComment = Comment.new(comment)
   puts comment
   if newComment.save(comment)
@@ -74,6 +80,18 @@ post '/create' do
   else
     return "failure!"
   end
+end
+
+post "/login" do
+  @loginInfo = params[:loginInfo]
+  if(@loginInfo['author'] == nil)
+    session['author'] = "Anonymous"
+    session['login'] = true
+  else
+    session['author'] = @loginInfo['author']
+    session['login'] = true
+  end
+  redirect "back"
 end
 
 

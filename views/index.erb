@@ -6,12 +6,11 @@ $(document).ready(function(){
 <div class="row">
   <div class="col-md-4" >
     <%@videos.each do |link| %>
-    <div style="border: 1px solid black;">
-      <a href="<%= link.link %>"><img src="<%= "http://img.youtube.com/vi/" + link.link.to_s.slice(/[A-Z|0-9]{10,12}/i) + "/3.jpg" %>" style="float: left; margin:2px;"></a>
+    <div class="col-md-4">
+      <a href="<%= link.link %>"><img src="<%= "http://img.youtube.com/vi/" + link.link.to_s.slice(/[A-Z|0-9]{10,12}/i) + "/3.jpg" %>" class="img-circle" width="128" height="128"></a>
       <!--button class="btn btn-default" <%= "onclick=\"player.loadVideoById('" + link.link.to_s.slice(/[A-Z|0-9]{10,12}/i) + "', 0, 'large');\"" %>>Watch</button-->
       <form action="/video&watch_v=<%= link.id %>" method="GET"> 
       <button class="btn btn-default">View Comments</button></form>
-      <br clear="all">
     </div>
     <% end %>
   </div>

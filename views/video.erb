@@ -17,8 +17,8 @@
     <div>
         <%@comments.each do |comment| %>
         <br clear="all">
-        <p><%= comment.comment %> </p>
-        <hr>
+        <p><strong><%= comment.author %></strong></p>
+        <p class="col-sm-10"><%= comment.comment %> </p>
         <% end %>
     </div>
   </div>
